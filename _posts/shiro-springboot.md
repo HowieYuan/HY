@@ -7,7 +7,9 @@ author:     Howie                      # 作者
 header-img: img/post-shiro-springboot.jpg    #这篇文章标题背景图片
 catalog: true                       # 是否归档
 tags:                               #标签
-    - 生活
+    - Java
+    - Shiro
+    - SpringBoot
 
 ---
 >最近搞了下 Shiro 安全框架，找了一些网上的博客文章，但是一到自己实现的时候就遇到了各种坑，需要各种查资料看源码以及各种测试。
