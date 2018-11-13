@@ -1,10 +1,10 @@
 ---
 layout:     post                    # 使用的布局（不需要改）
 title:      教你 Shiro 整合 SpringBoot，避开各种坑               # 标题 
-subtitle:   Hello World, Hello Blog #副标题
+subtitle:    #副标题
 date:       2018-04-30              # 时间
 author:     Howie                      # 作者
-header-img: img/post-bg-2015.jpg    #这篇文章标题背景图片
+header-img: img/post-shiro-springboot.jpg    #这篇文章标题背景图片
 catalog: true                       # 是否归档
 tags:                               #标签
     - 生活
