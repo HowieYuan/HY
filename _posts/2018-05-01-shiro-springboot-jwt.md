@@ -4,7 +4,7 @@ title:      教你 Shiro + SpringBoot 整合 JWT               # 标题
 subtitle:    #副标题
 date:       2018-05-01              # 时间
 author:     Howie                      # 作者
-header-img: img/shiro-springboot-jwt.jpg    #这篇文章标题背景图片
+header-img: img/shiro springboot.jpg    #这篇文章标题背景图片
 catalog: true                       # 是否归档
 tags:                               #标签
     - Java
