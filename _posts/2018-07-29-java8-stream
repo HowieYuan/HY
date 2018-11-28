@@ -2,7 +2,7 @@
 layout:     post                    # 使用的布局（不需要改）
 title:      简洁又快速地处理集合——Java8 Stream（上）               # 标题 
 subtitle:    #副标题
-date:       2018-7-29              # 时间
+date:       2018-07-29              # 时间
 author:     Howie                      # 作者
 header-img: img/java8-stream.jpg    #这篇文章标题背景图片
 catalog: true                       # 是否归档
