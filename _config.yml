@@ -1,10 +1,10 @@
 # Site settings
 title: Howie's Blog
-SEOTitle: Howie的博客 | BY Blog
+SEOTitle: Howie的博客 | Howie's Blog
 header-img: img/post-bg-desk.jpg
 email: swithaoy@gmail.com
 description: "a self-motivated boy who love programming. 兴趣与上进心至上。"
-keyword: "BY, BY Blog, Howie的博客, Howie, Java"
+keyword: "Howie, Howie's Blog, Howie 的博客, Howie, Java"
 url: "https://howieyuan.github.io/"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/HowieYuan/HowieYuan.github.io" # you code repository
