@@ -55,6 +55,8 @@ HashMap 有以下几个字段：
 - int modCount：HashMap 结构修改次数（例如每次 put 新值使则自增 1）
 - int size：当前 key-value 个数
 
+值得一提的是，HashMap 中数组的初始大小为 16，这是为什么呢？这个我会在后面讲 put 方法的时候说到。
+
 ## 方法
 ### hash(Object key)
 我们都知道，Object 类的 hashCode 方法与 HashMap 息息相关，因为 HashMap 便是通过 hashCode 来确定一个 key 在数组中的存储位置。（这里大家都应该了解一下 hashCode 与 equals 方法之间的关系与约定，这里就不多说了）
@@ -68,6 +70,9 @@ static final int hash(Object key) {
     return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 }
 ```
+
+
+
 
 ### put(K key, V value)
 put 方法是 HashMap 里面一个十分核心的方法，关系到了 HashMap 对数据的存储问题。
@@ -138,7 +143,14 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 
 有个值得注意的有趣的地方：在 Java 8 之前，HashMap 插入数据时一直是插入到链表表头；而到了 Java 8 之后，则改为了尾部插入。至于头插入有什么缺点，其中一个就是在并发的情况下因为插入而进行扩容时可能会出现链表环而发生死循环；当然，HashMap 设计出来本身就不是用于并发的情况的。
 
-#### （1）懒加载
+#### （1）HashMap 初始大小为何是 16
+每当插入一个元素时，我们都需要计算该值在数组中的位置，即```p = tab[i = (n - 1) & hash]```。
+
+当 n = 16 时，n - 1 = 15，二进制为 1111，这时和 hash 作与运算时，元素的位置完全取决与 hash 的大小
+
+倘若不是 16，如 n = 10，n - 1 = 9，二进制为 1001，这时作与运算，很容易出现重复值，如 1101 & 1001，1011 & 1001，1111 & 1001，结果都是一样的，所以选择 16 以及 每次扩容都乘以二的原因也可想而知了
+
+#### （2）懒加载
 我们在 HashMap 的构造函数中可以发现，哈希表 Node[] table 并没有在一开始就完成初始化；观察 put 方法可以发现：
 ```
 if ((tab = table) == null || (n = tab.length) == 0)
@@ -146,7 +158,7 @@ if ((tab = table) == null || (n = tab.length) == 0)
 ```
 当发现哈希表为空或者长度为 0 时，会使用 resize 方法进行初始化，这里很显然运用了 lazy-load 原则，当哈希表被首次使用时，才进行初始化
 
-#### （2）树化
+#### （3）树化
 Java8 中，HashMap 最大的变动就是增加了树化处理，当链表中元素大于等于 8，这时有可能将链表改造为红黑树的数据结构，为什么我这里说可能呢?
 ```
 final void treeifyBin(HashMap.Node<K,V>[] tab, int hash) {
@@ -157,7 +169,7 @@ final void treeifyBin(HashMap.Node<K,V>[] tab, int hash) {
         //......
 }
 ```
-我们可以观察树化处理的方法 treeifyBin，发现当```tab == null || (n = tab.length) < MIN_TREEIFY_CAPACITY```为 true 时，只会进行扩容处理，而没有进行树化；MIN_TREEIFY_CAPACITY 规定了 HashMap 可以树化的最小表容量为 64，这是为了避免在哈希表建立初期，多个键值对恰好被放入了同一个链表中而导致不必要的转化。
+我们可以观察树化处理的方法 treeifyBin，发现当```tab == null || (n = tab.length) < MIN_TREEIFY_CAPACITY```为 true 时，只会进行扩容处理，而没有进行树化；MIN_TREEIFY_CAPACITY 规定了 HashMap 可以树化的最小表容量为 64，这是因为当一开始哈希表容量较小是，哈希碰撞的几率会比较大，而这个时候出现长链表的可能性会稍微大一些，这种原因下产生的长链表，我们应该优先选择扩容而避免这类不必要的树化。
 
 那么，HashMap 为什么要进行树化呢？我们都知道，链表的查询效率大大低于数组，而当过多的元素连成链表，会大大降低查询存取的性能；同时，这也涉及到了一个安全问题，一些代码可以利用能够造成哈希冲突的数据对系统进行攻击，这会导致服务端 CPU 被大量占用。
 
