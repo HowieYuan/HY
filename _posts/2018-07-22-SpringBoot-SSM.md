@@ -19,6 +19,7 @@ tags:                               #标签
 >而本文，我将教大家如何在 **intellij idea** 中快速构建好一个 **Maven + Spring + SpringMVC + MyBatis + SpringBoot** 的框架，**做到了足够精简**，让你可以立刻开始你的 web 项目
 >
 >附上这个简单的框架构建的 github 地址 [SSM-SpringBoot](https://github.com/SwitHaoy/SSM-SpringBoot)
+
 # 一. 创建项目
 选择 Spring Initiallizr
 
@@ -62,6 +63,7 @@ spring.datasource.driver-class-name = com.mysql.jdbc.Driver
 - <!DOCTYPE> 声明为映射文件
 - namespace ： 指该映射文件对应的映射接口 ； 一般来说，一个 XML 映射配置文件对应一个命名空间，而这个命名空间又对应一个接
 口
+
 ```
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -72,19 +74,24 @@ spring.datasource.driver-class-name = com.mysql.jdbc.Driver
 
 ## 2. application.properties
 - Mybatis 配置,指定了 mybatis 基础配置文件和实体类映射文件的地址
+
 ```
 mybatis.mapperLocations = classpath:mapper/**/*.xml
 mybatis.typeAliasesPackage = com.swit.model
 ```
+
 - 配置 typeAliasesPackage 可以使得 com.swit.model 包内的实体类可以在映射文件中使用别名，如：
+
 ```
 <select id="getUser" parameterType="int" resultType="User">
 
 </select>
 ```
+
 如没有配置 typeAliasesPackage ，则需要 ```resultType="com.swit.model.User"```
 
 - 如果要对 MyBatis 通过 xml 文件进行另外的配置,则添加文件路径：
+
 ```
 mybatis.config-locations=classpath:mybatis/mybatis-config.xml
 ```
@@ -97,7 +104,9 @@ value 为 mapper 类所在的包（注意这里是包的路径，而不是类的
 @MapperScan(value = "com.swit.dao")
 ```
 另外， @MapperScan 注解面向的是接口类，只要是加了注解的接口类都需要进行通过该注解来扫描
+
 ### （2）可以在每个 mapper 类上添加 @mapper 注解
+
 ```
 @Mapper
 @Repository
@@ -118,6 +127,7 @@ public interface MyMapper {
 ## 2. 部署服务器
 如果你想把自己的 SpringBoot 项目部署到阿里云，腾讯云等服务器，那么你还需要加点东西。
 1.如果需要通过打包的方式在web容器中进行部署，则需要继承 SpringBootServletInitializer 覆盖configure(SpringApplicationBuilder)方法
+
 ```
 public class SpringbootApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
@@ -131,7 +141,9 @@ public class SpringbootApplication extends SpringBootServletInitializer {
     } 
 }
 ```
+
 2.pom 文件添加打包插件
+
 ```
     <build>
         <!--打包后的项目名，url 前缀-->
@@ -157,7 +169,9 @@ public class SpringbootApplication extends SpringBootServletInitializer {
 		</plugins>
 	</build>
 ```
+
 3. 你很有可能还需要做个跨域处理
+
 ```
 @Component
 public class CorsFilter implements Filter {
@@ -199,12 +213,14 @@ public class CorsFilter implements Filter {
 ## 1. redis
 redis 也是我们项目中经常用到的 NoSQL，经常用来做做缓存什么的。
 ### 依赖
+
 ```
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-data-redis</artifactId>
 </dependency>
 ```
+
 ### application.properties
 ```
 # Redis数据库索引（默认为0）
