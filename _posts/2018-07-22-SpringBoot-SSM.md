@@ -175,22 +175,11 @@ public class SpringbootApplication extends SpringBootServletInitializer {
 ```
 @Component
 public class CorsFilter implements Filter {
-    /**
-     * json web token 在请求头的名字
-     */
-    private String tokenHeader = "X_Auth_Token";
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
-        String token = request.getHeader("X_Auth_Token");
-        System.out.println(token + "token");
-        String Origin = request.getHeader("Origin");
-        System.out.println("Origin:" + Origin);
-        System.out.println("tokenHeader:" + this.tokenHeader);
-        Logger logger = Logger.getLogger(this.getClass());
-        logger.info("Origin:  " + Origin);
         response.setHeader("Access-Control-Allow-Origin", Origin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
