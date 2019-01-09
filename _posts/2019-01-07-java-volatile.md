@@ -2,7 +2,7 @@
 layout:     post                    # 使用的布局（不需要改）
 title:      Java 程序员都该懂的 volatile 关键字               # 标题 
 subtitle:    #副标题
-date:       2019-1-7             # 时间
+date:       2019-01-07             # 时间
 author:     Howie                      # 作者
 header-img: img/java8-hashmap.jpg    #这篇文章标题背景图片
 catalog: true                       # 是否归档
